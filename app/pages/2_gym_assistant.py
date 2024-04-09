@@ -24,13 +24,16 @@ for message in st.session_state.messages_assistant:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if prompt := st.chat_input("What is up?"):
-    st.session_state.messages_assistant.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
+if prompt := st.chat_input("What's up?"):
+    if len(st.session_state.messages_assistant) < 10:  # Considering both user and assistant messages
+        st.session_state.messages_assistant.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
 
-    with st.chat_message("assistant"):
-        user_id = "123" # TODO: This is what you need to change to keep track of convos
-        message = generate_response(prompt, user_id)
-        st.markdown(message)
-    st.session_state.messages_assistant.append({"role": "assistant", "content": message})
+        with st.chat_message("assistant"):
+            user_id = "123" # TODO: This is what you need to change to keep track of convos
+            message = generate_response(prompt, user_id)
+            st.markdown(message)
+        st.session_state.messages_assistant.append({"role": "assistant", "content": message})
+    else:
+        st.error("You have reached the maximum amount of messages")
