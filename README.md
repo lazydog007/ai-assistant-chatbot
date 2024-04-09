@@ -1,3 +1,3 @@
 # Ai Assistant Chatbot
 
-Clone yourself, be in two place at the same time.
+OpenAi general and assistant API integration in python with a simple Streamlit UI
