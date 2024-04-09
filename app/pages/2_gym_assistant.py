@@ -1,4 +1,5 @@
 import os
+import re
 from dotenv import load_dotenv
 from openai import OpenAI
 import openai
@@ -12,7 +13,7 @@ OPENAI_ASSISTANT_ID = os.getenv("OPENAI_ASSISTANT_ID")
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
 assistant = client.beta.assistants.retrieve(OPENAI_ASSISTANT_ID)
 
-st.title("Assistant powered by OpenAI")
+st.title("Fuerza Gym Customer Support")
 
 if "assistant" not in st.session_state:
     st.session_state["assistant"] = assistant
@@ -33,7 +34,14 @@ if prompt := st.chat_input("What's up?"):
         with st.chat_message("assistant"):
             user_id = "123" # TODO: This is what you need to change to keep track of convos
             message = generate_response(prompt, user_id)
-            st.markdown(message)
-        st.session_state.messages_assistant.append({"role": "assistant", "content": message})
+            print('\n')
+            print(message)
+            print('\n')
+            cleaned_messaged = re.sub(r"【.*?】", "", message)
+            print('\n')
+            print(cleaned_messaged)
+            print('\n')
+            st.markdown(cleaned_messaged)
+        st.session_state.messages_assistant.append({"role": "assistant", "content": cleaned_messaged})
     else:
         st.error("You have reached the maximum amount of messages")
