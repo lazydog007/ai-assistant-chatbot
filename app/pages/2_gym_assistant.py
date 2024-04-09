@@ -13,6 +13,11 @@ OPENAI_ASSISTANT_ID = os.getenv("OPENAI_ASSISTANT_ID")
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
 assistant = client.beta.assistants.retrieve(OPENAI_ASSISTANT_ID)
 
+st.set_page_config(
+    page_title="Fuerza Gym Support",
+    page_icon=":muscle:",
+)
+
 st.title("Fuerza Gym Customer Support")
 
 if "assistant" not in st.session_state:
